@@ -40,11 +40,11 @@ void SetBufferRate_Ctor(SetBufferRate* unit)
 }
 void SetBufferRate_next_k(SetBufferRate *unit, int inNumSamples)
 {
-  float trig = ZIN0(1);
+  float trig = IN0(1);
 
   if (trig > 0.f && unit->m_prevtrig <= 0.f) {
     SIMPLE_GET_BUF
-    float samplerate = ZIN0(2);
+    float samplerate = IN0(2);
     SndBuf* buf2 = unit->mWorld->mSndBufsNonRealTimeMirror + (int)unit->m_fbufnum;
     unit->m_buf->samplerate = samplerate;
     buf2->samplerate = samplerate;
