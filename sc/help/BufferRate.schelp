@@ -31,6 +31,7 @@ examples::
 One shot use- change the buffer rate to control rate, free the synth
 
 code::
+s.boot;
 b=Buffer.alloc(s,128);
 (
   {
@@ -38,10 +39,28 @@ b=Buffer.alloc(s,128);
   }.play;
 )
 b.updateInfo;
-b.rate;
-b.write
+b.sampleRate;          // rate is now 750 (depending on system)
+b.write("buf.wav");    // rate of buf.wav is now 750 (depending on system)
 ::
+
+Keep running and change several times
+
+code::
+s.boot;
+b=Buffer.alloc(s,128);
+(
+  x={
+    arg t_rate;
+    BufferRate.kr(b, t_rate, t_rate);
+  }.play;
+  x.set(\t_rate, 1000);
+  x.set(\t_rate, 2000);
+  x.set(\t_rate, 3000);
+)
+::
+
 
 discussion::
 
 Sometimes it is useful to change the rate of a buffer after it was created- with regular SuperCollider tools, this is only possible by performing a read on an existing audio file of a certain rate. Rates differing from server sample rate are well supported, with this UGen they gain some flexibility, for example to record control rate values and then save them with the correct rate in the created file.
+
