@@ -18,7 +18,7 @@
     Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
 */
 
-#include "SC_PlugIn.hpp"
+#include "SC_PlugIn.h"
 
 static InterfaceTable *ft;
 
@@ -29,8 +29,8 @@ struct BufferRate : public Unit
   float m_prevtrig;
 };
 
-static void BufferRate_next_k(BufferRate* unit, int inNumSamples);
 static void BufferRate_Ctor(BufferRate* unit);
+static void BufferRate_next_k(BufferRate* unit, int inNumSamples);
 
 void BufferRate_Ctor(BufferRate* unit)
 {
@@ -57,6 +57,7 @@ void BufferRate_next_k(BufferRate *unit, int inNumSamples)
 
 PluginLoad(BufferUtility)
 {
+  ft = inTable;
   DefineSimpleUnit(BufferRate);
 }
 
