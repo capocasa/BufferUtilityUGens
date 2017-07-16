@@ -22,23 +22,23 @@
 
 static InterfaceTable *ft;
 
-struct SetBufferRate : public Unit
+struct BufferRate : public Unit
 {
   float m_fbufnum;
   SndBuf *m_buf;
   float m_prevtrig;
 };
 
-static void SetBufferRate_next_k(SetBufferRate* unit, int inNumSamples);
-static void SetBufferRate_Ctor(SetBufferRate* unit);
+static void BufferRate_next_k(BufferRate* unit, int inNumSamples);
+static void BufferRate_Ctor(BufferRate* unit);
 
-void SetBufferRate_Ctor(SetBufferRate* unit)
+void BufferRate_Ctor(BufferRate* unit)
 {
-  SETCALC(SetBufferRate_next_k);
+  SETCALC(BufferRate_next_k);
   unit->m_fbufnum = -1e9f;
-  SetBufferRate_next_k(unit, 1);
+  BufferRate_next_k(unit, 1);
 }
-void SetBufferRate_next_k(SetBufferRate *unit, int inNumSamples)
+void BufferRate_next_k(BufferRate *unit, int inNumSamples)
 {
   float trig = IN0(1);
 
@@ -48,6 +48,7 @@ void SetBufferRate_next_k(SetBufferRate *unit, int inNumSamples)
     SndBuf* buf2 = unit->mWorld->mSndBufsNonRealTimeMirror + (int)unit->m_fbufnum;
     unit->m_buf->samplerate = samplerate;
     buf2->samplerate = samplerate;
+    DoneAction((int)IN0(3), unit);
     //printf("SR %f %f\n", unit->m_buf->samplerate, buf2->samplerate);
   }
 
@@ -56,6 +57,6 @@ void SetBufferRate_next_k(SetBufferRate *unit, int inNumSamples)
 
 PluginLoad(BufferUtility)
 {
-  DefineSimpleUnit(SetBufferRate);
+  DefineSimpleUnit(BufferRate);
 }
 
