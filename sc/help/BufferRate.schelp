@@ -1,0 +1,47 @@
+class:: BufferRate 
+summary:: Buffer rate utility class 
+categories::  UGens>Buffer
+
+
+Description::
+Allows changing the buffer rate after creating it
+
+classmethods::
+
+method:: kr
+
+argument:: bufnum
+
+The number to change the rate for
+
+argument:: trigger
+
+Rate change occurs on trigger
+
+argument:: samplerate
+
+The new rate for the buffer
+
+argument:: doneAction
+
+The doneAction to perform after a successful trigger, e.g. to free the synth
+
+examples::
+
+One shot use- change the buffer rate to control rate, free the synth
+
+code::
+b=Buffer.alloc(s,128);
+(
+  {
+    BufferRate.kr(b, 1, ControlRate.ir, 2);
+  }.play;
+)
+b.updateInfo;
+b.rate;
+b.write
+::
+
+discussion::
+
+Sometimes it is useful to change the rate of a buffer after it was created- with regular SuperCollider tools, this is only possible by performing a read on an existing audio file of a certain rate. Rates differing from server sample rate are well supported, with this UGen they gain some flexibility, for example to record control rate values and then save them with the correct rate in the created file.
