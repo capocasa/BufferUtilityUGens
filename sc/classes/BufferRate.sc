@@ -1,5 +1,5 @@
 
-BufSet : UGen {
+BufferRate: UGen {
   *ar {
     thisMethod.shouldNotImplement;
   }
